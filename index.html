@@ -2,22 +2,96 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
-</head>
+    <link href="./css/style.css" rel="stylesheet">
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <body>
-    <div id="area">
-        <img src="./img/EDG.png" alt="" class="EDG">
-        <img src="./img/FPX.png" alt="" class="FPX">
-        <img src="./img/TE.png" alt="" class="TE">
-        <img src="./img/BLG.png" alt="" class="BLG">
+<style>
+    area {
+        position: relative;
+    }
+
+    #area img {
+        position: relative;
+    }
+    #winner {
+        display: none;
+        margin-top: 20px;
+        text-align: center;
+    }
+    #winner img {
+        width: 120px;
+        height: auto;
+        opacity: 1;
+    }
+</style>
+<div id="area">
+    <img alt="" class="EDG" src="./img/EDG.png">
+    <img alt="" class="FPX" src="./img/FPX.png">
+    <img alt="" class="TE" src="./img/TE.png">
+    <img alt="" class="BLG" src="./img/BLG.png">
+</div>
+<div id="bottom">
+    <input id="vote-btn" style="display: block;margin: 30px auto auto;height: 30px;" type="button" value="开始支持投票">
+    <div id="team-img">
+        <img alt="" class="EDG" src="./img/EDG.png" style="display: none">
+        <img alt="" class="FPX" src="./img/FPX.png" style="display: none">
+        <img alt="" class="TE" src="./img/TE.png" style="display: none">
+        <img alt="" class="BLG" src="./img/BLG.png" style="display: none">
     </div>
-    <div id="bottom">
-        <input type="button" value="开始支持投票" style="display: block;margin: auto; margin-top: 30px;height: 30px;">
-    </div>
-    <script>
-        // 此处插入你的代码
-    </script>
+</div>
+<div id="winner"></div>
+<script>
+    $(document).ready(function () {
+        $("#vote-btn").click(function () {
+            let area =$("#area img");
+            let votes = new Array($("#area").children().length);
+            votes.fill(0);
+            area.each(function (index) {
+                if (index % 2 === 0) {
+                    votes[index] += 1;
+                    //室友一
+                }
+                if (index === votes.length - 3) {
+                    votes[index] += 1;//室友二
+                }
+
+                if ($(this).hasClass("EDG")) {
+                    votes[index] += 1;//室友三
+                }
+            });
+
+            area.each(function (index) {
+                if (votes[index] === Math.max(...votes)) {
+                    votes[index] += 1;//室友四
+                }
+            });
+            area.each(function (index) {
+                $(this).animate({
+                    left: (votes[index] * 100) + 'px',
+                    opacity: '1',
+                }, 500);
+                if (votes[index] === Math.max(...votes)) {
+                    let winner = $('#team-img img').eq(index);
+                    winner.css({
+                        display:'block',
+                        left: '45%',
+                        position:'relative',
+                    }
+
+
+
+
+                    )
+                }
+
+
+            })
+        });
+        })
+
+
+</script>
 </body>
 </html>
