@@ -8,22 +8,8 @@
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 <body>
 <style>
-    area {
-        position: relative;
-    }
-
     #area img {
         position: relative;
-    }
-    #winner {
-        display: none;
-        margin-top: 20px;
-        text-align: center;
-    }
-    #winner img {
-        width: 120px;
-        height: auto;
-        opacity: 1;
     }
 </style>
 <div id="area">
@@ -45,7 +31,7 @@
 <script>
     $(document).ready(function () {
         $("#vote-btn").click(function () {
-            let area =$("#area img");
+            let area = $("#area img");
             let votes = new Array($("#area").children().length);
             votes.fill(0);
             area.each(function (index) {
@@ -56,12 +42,10 @@
                 if (index === votes.length - 3) {
                     votes[index] += 1;//室友二
                 }
-
                 if ($(this).hasClass("EDG")) {
                     votes[index] += 1;//室友三
                 }
             });
-
             area.each(function (index) {
                 if (votes[index] === Math.max(...votes)) {
                     votes[index] += 1;//室友四
@@ -75,23 +59,15 @@
                 if (votes[index] === Math.max(...votes)) {
                     let winner = $('#team-img img').eq(index);
                     winner.css({
-                        display:'block',
-                        left: '45%',
-                        position:'relative',
-                    }
-
-
-
-
+                            display: 'block',
+                            left: '45%',
+                            position: 'relative',
+                        }
                     )
                 }
-
-
             })
         });
-        })
-
-
+    })
 </script>
 </body>
 </html>
